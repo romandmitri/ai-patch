@@ -5,7 +5,7 @@ import { fail, PatchErrorCode } from "#src/error/PatchError.js";
 import type { Operation } from "#src/operation/Operation.js";
 import { OperationType } from "#src/operation/OperationType.js";
 import type { Edit } from "#src/patch/Edit.js";
-import type { InputIndex } from "#src/patch/InputIndex.js";
+import type { EditIndex } from "#src/patch/EditIndex.js";
 import { Patcher } from "#src/patch/Patcher.js";
 
 export class Patcher_Text extends Patcher {
@@ -51,7 +51,7 @@ export class Patcher_Text extends Patcher {
 		return starts;
 	}
 
-	private createEdit(operation: Operation, inputIndex: InputIndex, content: Content, lineStarts: readonly ContentPosition[]): Edit {
+	private createEdit(operation: Operation, inputIndex: EditIndex, content: Content, lineStarts: readonly ContentPosition[]): Edit {
 		if (operation.expectedLine > lineStarts.length) {
 			return fail(inputIndex, PatchErrorCode.InvalidExpectedLine, "expectedLine must identify a 1-based line in the original content");
 		}

@@ -4,7 +4,3 @@ export enum OperationType {
 	InsertAfter = "insertAfter",
 	Delete = "delete",
 }
-
-export const isValidOperationType = (type: OperationType): boolean => {
-	return Object.values(OperationType).includes(type);
-};

@@ -14,6 +14,7 @@ export interface TargetOptions {
 	readonly format: ContentFormat;
 }
 
+// TODO: reidenzon - Rename to Patchlet or something clever?!
 export class Target {
 	readonly content: Content;
 	readonly format: ContentFormat;
@@ -36,15 +37,16 @@ export class Target {
 	};
 
 	toSchema(): ZodType<Operation[]> {
-		const operationSchema = z.union([
-			PatchOperation_Replace_Schema,
-			PatchOperation_InsertBefore_Schema,
-			PatchOperation_InsertAfter_Schema,
-			PatchOperation_Delete_Schema,
-		]);
-
 		return z
-			.array(operationSchema)
+			.array(
+				z.union([
+					//
+					PatchOperation_Replace_Schema,
+					PatchOperation_InsertBefore_Schema,
+					PatchOperation_InsertAfter_Schema,
+					PatchOperation_Delete_Schema,
+				]),
+			)
 			.describe(
 				"Atomically update this target only. Every anchor and conflict is validated against the original content coordinates, and any invalid patch rejects the entire list.",
 			);
@@ -66,6 +68,7 @@ export class Target {
 		const inputIndex = typeof issue.path[0] === "number" ? issue.path[0] : 0;
 		const field = issue.path[1];
 
+		// TODO: reidenzon - This is kinda pointless... just throw the code, self-explanatory.
 		switch (field) {
 			case "operation":
 				return fail(inputIndex, PatchErrorCode.InvalidOperation, "has an unsupported operation");
