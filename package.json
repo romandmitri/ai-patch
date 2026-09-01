@@ -1,11 +1,36 @@
 {
 	"name": "@romandmitri/ai-patch",
 	"version": "0.0.0",
-	"private": false,
-	"scripts": {
+	"author": "Roman Eidenzon <romandmitri@gmail.com> (https://www.romandmitri.com)",
+	"description": "Diff-based updates for large LLM-generated text files.",
+	"type": "module",
+	"engines": {
+		"node": ">=20"
 	},
-	"dependencies": {
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist",
+		"README.md"
+	],
+	"scripts": {
+		"clean": "rimraf dist",
+		"build": "npm run clean && tsc",
+		"typecheck": "tsc --noEmit",
+		"prepublishOnly": "npm run typecheck && npm run build"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"devDependencies": {
+		"@types/node": "26.4.0",
+		"rimraf": "6.1.3",
+		"typescript": "7.0.2"
 	}
 }

@@ -1,5 +1,10 @@
 # IDEs
 .idea
+.kilo/plans/
 
 # dependencies
 /node_modules
+
+# generated artifacts
+/dist
+*.tgz
