@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 
 function target(content: string): Target {
-	return new Target({ content, format: ContentFormat.Markdown });
+	return new Target({ content, format: ContentFormat.Text });
 }
 
 function assertPatchError(callback: () => unknown, code: PatchErrorCode, patchIndex: number): void {

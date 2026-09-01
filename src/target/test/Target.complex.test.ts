@@ -72,7 +72,7 @@ Finish with an explicit GO or NO-GO recommendation.
 function target(): Target {
 	return new Target({
 		content: STARTING_PROMPT,
-		format: ContentFormat.Markdown,
+		format: ContentFormat.Text,
 	});
 }
 

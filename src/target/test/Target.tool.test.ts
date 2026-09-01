@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 
 function target(content: string): Target {
-	return new Target({ content, format: ContentFormat.Markdown });
+	return new Target({ content, format: ContentFormat.Text });
 }
 
 async function executeTool(generatedTool: TargetTool, input: Parameters<NonNullable<TargetTool["execute"]>>[0]): Promise<unknown> {

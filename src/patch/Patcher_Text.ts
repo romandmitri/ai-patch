@@ -8,7 +8,7 @@ import type { Edit } from "#src/patch/Edit.js";
 import type { InputIndex } from "#src/patch/InputIndex.js";
 import { Patcher } from "#src/patch/Patcher.js";
 
-export class Patcher_Markdown extends Patcher {
+export class Patcher_Text extends Patcher {
 	apply(operations: readonly Operation[]): Content {
 		const newline = this.detectNewline();
 		const normalizedContent = this.normalizeNewlines(this.content);

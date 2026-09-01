@@ -2,7 +2,24 @@
 	"name": "@romandmitri/ai-patch",
 	"version": "0.1.0",
 	"author": "Roman Eidenzon <romandmitri@gmail.com> (https://www.romandmitri.com)",
-	"description": "Diff-based updates for large LLM-generated text files.",
+	"description": "Validated, atomic text patches for precise AI and LLM edits to large text prompts/documents.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/romandmitri/ai-patch.git"
+	},
+	"homepage": "https://github.com/romandmitri/ai-patch#readme",
+	"bugs": {
+		"url": "https://github.com/romandmitri/ai-patch/issues"
+	},
+	"keywords": [
+		"ai",
+		"llm",
+		"vercel-ai-sdk",
+		"markdown",
+		"text-patch",
+		"structured-output",
+		"zod"
+	],
 	"type": "module",
 	"imports": {
 		"#src/*": "./dist/*"
@@ -20,6 +37,7 @@
 	"types": "./dist/index.d.ts",
 	"files": [
 		"dist",
+		"docs",
 		"README.md"
 	],
 	"scripts": {

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 
 function target(content: string): Target {
-	return new Target({ content, format: ContentFormat.Markdown });
+	return new Target({ content, format: ContentFormat.Text });
 }
 
 test("apply supports all four operations", async (t) => {
@@ -61,8 +61,8 @@ test("apply supports all four operations", async (t) => {
 });
 
 test("apply replaces multiline anchors exactly", () => {
-	const markdown = "# Heading\nold first\nold second\nfooter\n";
-	const result = target(markdown).apply([
+	const content = "# Heading\nold first\nold second\nfooter\n";
+	const result = target(content).apply([
 		{
 			operation: OperationType.Replace,
 			expectedLine: 2,
@@ -144,6 +144,6 @@ test("Target remains immutable after applying patches", () => {
 
 	assert.equal(result, "after");
 	assert.equal(patchTarget.content, "before");
-	assert.equal(patchTarget.format, ContentFormat.Markdown);
+	assert.equal(patchTarget.format, ContentFormat.Text);
 	assert.equal(Object.isFrozen(patchTarget), true);
 });

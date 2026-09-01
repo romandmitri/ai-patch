@@ -6,7 +6,7 @@ import { PatchOperation_Delete_Schema } from "#src/operation/Operation_Delete.js
 import { PatchOperation_InsertAfter_Schema } from "#src/operation/Operation_InsertAfter.js";
 import { PatchOperation_InsertBefore_Schema } from "#src/operation/Operation_InsertBefore.js";
 import { PatchOperation_Replace_Schema } from "#src/operation/Operation_Replace.js";
-import { Patcher_Markdown } from "#src/patch/Patcher_Markdown.js";
+import { Patcher_Text } from "#src/patch/Patcher_Text.js";
 import { tool, type Tool } from "ai";
 import { z, type ZodIssue, type ZodType } from "zod";
 
@@ -22,7 +22,7 @@ export class Target {
 	readonly format: ContentFormat;
 
 	constructor(p: TargetOptions) {
-		if (p.format !== ContentFormat.Markdown) {
+		if (p.format !== ContentFormat.Text) {
 			throw new RangeError(`Unsupported content format: ${p.format}`);
 		}
 
@@ -34,7 +34,7 @@ export class Target {
 	static fromContent = (content: Content, format?: ContentFormat) => {
 		return new Target({
 			content: content,
-			format: format ?? ContentFormat.Markdown,
+			format: format ?? ContentFormat.Text,
 		});
 	};
 
@@ -60,8 +60,8 @@ export class Target {
 		}
 
 		switch (this.format) {
-			case ContentFormat.Markdown:
-				return new Patcher_Markdown(this.content).apply(parsed.data);
+			case ContentFormat.Text:
+				return new Patcher_Text(this.content).apply(parsed.data);
 		}
 	}
 

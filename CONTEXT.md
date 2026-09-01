@@ -18,11 +18,13 @@ performs immutable, in-memory, atomic transformations against exact anchors in o
   AI SDK tools.
 - `src/operation/`: owns the operation union, discriminants, operation-specific types, and strict Zod schemas.
 - `src/patch/Patcher.ts`: abstract internal patch-engine contract over immutable content.
-- `src/patch/Patcher_Markdown.ts`: normalizes Markdown text, resolves original line anchors to concrete edits, validates conflicts, and applies edits.
+- `src/patch/Patcher_Text.ts`: normalizes Markdown text, resolves original line anchors to concrete edits, validates conflicts, and applies edits.
 - `src/patch/Edit.ts`: normalized internal edit representation using source input indexes and original-content offsets.
 - `src/content/`: owns semantic aliases for complete content, partial content, line numbers, offsets, and supported formats.
 - `src/error/PatchError.ts`: owns domain error codes and indexed patch failures.
 - `src/target/test/`: covers application behavior, complex batches, errors, schemas, and AI SDK tools.
+- `README.md`: concise npm-facing product overview and minimal structured-output example.
+- `docs/`: detailed usage, AI SDK integration, API/error, and local development documentation.
 - `dist/`: generated build and publication output; source files are authoritative.
 
 ## Patch Lifecycle
@@ -50,7 +52,7 @@ performs immutable, in-memory, atomic transformations against exact anchors in o
 - Source imports use `#src/*.js`; TypeScript maps them to `src/*`, while `package.json#imports` maps built runtime imports to `dist/*`.
 - Only the package root is publicly exported. Consumers import from `@romandmitri/ai-patch`, not `#src` paths.
 - Builds emit JavaScript, declarations, source maps, and declaration maps into `dist/`.
-- Published files are limited to `dist/` and `README.md`.
+- Published files are limited to `dist/`, `docs/`, and `README.md`.
 
 ## Tests And Commands
 

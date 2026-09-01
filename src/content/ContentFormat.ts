@@ -1,3 +1,5 @@
 export enum ContentFormat {
-	Markdown = "markdown",
+	// TODO: reidenzon - Roll improved JSON support, if needed.
+	// Json = "json",
+	Text = "text",
 }

@@ -4,7 +4,7 @@ import { test } from "node:test";
 import { z } from "zod";
 
 function target(content: string): Target {
-	return new Target({ content, format: ContentFormat.Markdown });
+	return new Target({ content, format: ContentFormat.Text });
 }
 
 test("toSchema parses every operation variant", () => {
