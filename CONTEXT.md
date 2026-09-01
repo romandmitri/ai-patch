@@ -59,6 +59,7 @@ performs immutable, in-memory, atomic transformations against exact anchors in o
 - `npm test`: runs all `src/target/test/*.test.ts` files with Node's test runner and `tsx`.
 - `npm run typecheck`: checks source and test TypeScript configurations without emitting output.
 - `npm run build`: removes `dist/` and compiles the package.
+- `npm run dev`: watches source files and incrementally rebuilds `dist/` after changes.
 - `npm run format`: applies Prettier formatting.
 - `npm run format:check`: verifies formatting.
 - `npm run prepublishOnly`: runs typechecking and a clean build; it does not run tests or formatting checks.

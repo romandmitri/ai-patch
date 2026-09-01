@@ -12,13 +12,15 @@ npm run build
 npm run format:check
 ```
 
-This repository is a library and has no development server or application run command.
+This repository is a library and has no development server. During development, run `npm run dev` in a terminal; it performs an initial build and automatically
+rebuilds `dist/` whenever a source file changes. Stop the watcher with Ctrl+C.
 
 ## Package Scripts
 
 - `npm test`: runs `src/target/test/*.test.ts` with Node's test runner and `tsx`.
 - `npm run typecheck`: checks source and test TypeScript configurations without emitting output.
 - `npm run build`: removes `dist/` and compiles JavaScript, declarations, and maps.
+- `npm run dev`: watches source files and rebuilds `dist/` after each change.
 - `npm run clean`: removes generated `dist/` output.
 - `npm run format`: applies Prettier formatting.
 - `npm run format:check`: verifies formatting without modifying files.

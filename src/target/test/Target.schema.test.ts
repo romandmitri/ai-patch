@@ -82,7 +82,8 @@ test("schema descriptions document target scope and exact atomic semantics", () 
 	assert.match(schema.description ?? "", /Atomically update this target only/);
 	assert.match(jsonSchema, /1-based line/);
 	assert.match(jsonSchema, /exact text anchor/);
-	assert.match(jsonSchema, /Replace the exact oldText anchor/);
+	assert.match(jsonSchema, /Must be exactly \\?"replace\\?" \(lowercase\)/);
+	assert.match(jsonSchema, /Must be exactly \\?"insertBefore\\?" \(case-sensitive\)/);
 	assert.match(jsonSchema, /original content coordinates/);
 });
 

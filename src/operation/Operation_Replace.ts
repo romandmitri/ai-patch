@@ -12,7 +12,7 @@ export type Operation_Replace = {
 
 export const PatchOperation_Replace_Schema = z
 	.strictObject({
-		operation: z.literal(OperationType.Replace).describe("Replace the exact oldText anchor with newText."),
+		operation: z.literal(OperationType.Replace).describe('Must be exactly "replace" (lowercase); replace the exact oldText anchor with newText.'),
 		expectedLine: z.number().int().min(1).describe("The exact 1-based line in the original target content where oldText must begin."),
 		oldText: z
 			.string()

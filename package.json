@@ -43,6 +43,7 @@
 	"scripts": {
 		"clean": "rimraf dist",
 		"build": "npm run clean && tsc",
+		"dev": "tsc --watch --preserveWatchOutput",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
 		"test": "node --import tsx --test src/target/test/*.test.ts",

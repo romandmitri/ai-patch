@@ -39,7 +39,7 @@ export class Target {
 	};
 
 	toSchema(): ZodType<Operation[]> {
-		const operationSchema = z.discriminatedUnion("operation", [
+		const operationSchema = z.union([
 			PatchOperation_Replace_Schema,
 			PatchOperation_InsertBefore_Schema,
 			PatchOperation_InsertAfter_Schema,

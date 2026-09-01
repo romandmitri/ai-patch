@@ -12,7 +12,9 @@ export type Operation_InsertBefore = {
 
 export const PatchOperation_InsertBefore_Schema = z
 	.strictObject({
-		operation: z.literal(OperationType.InsertBefore).describe("Insert newText immediately before the exact oldText anchor."),
+		operation: z
+			.literal(OperationType.InsertBefore)
+			.describe('Must be exactly "insertBefore" (case-sensitive); insert newText immediately before the exact oldText anchor.'),
 		expectedLine: z.number().int().min(1).describe("The exact 1-based line in the original target content where oldText must begin."),
 		oldText: z
 			.string()

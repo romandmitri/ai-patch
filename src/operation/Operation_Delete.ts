@@ -11,7 +11,7 @@ export type Operation_Delete = {
 
 export const PatchOperation_Delete_Schema = z
 	.strictObject({
-		operation: z.literal(OperationType.Delete).describe("Delete the exact oldText anchor."),
+		operation: z.literal(OperationType.Delete).describe('Must be exactly "delete" (lowercase); delete the exact oldText anchor.'),
 		expectedLine: z.number().int().min(1).describe("The exact 1-based line in the original target content where oldText must begin."),
 		oldText: z
 			.string()
