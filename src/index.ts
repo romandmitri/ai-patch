@@ -7,4 +7,4 @@ export type { Operation_InsertBefore } from "#src/operation/Operation_InsertBefo
 export type { Operation_Replace } from "#src/operation/Operation_Replace.js";
 export { OperationType } from "#src/operation/OperationType.js";
 export { Target } from "#src/target/Target.js";
-export type { TargetOptions, TargetTool } from "#src/target/Target.js";
+export type { TargetOptions } from "#src/target/Target.js";

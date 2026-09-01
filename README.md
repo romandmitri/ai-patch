@@ -36,22 +36,25 @@ Text is the currently supported content format. JSON coming... if needed.
 object.
 
 ```ts
-import {ContentFormat, Target} from "@romandmitri/ai-patch";
-import {Output, generateText} from "ai";
-import {z} from "zod";
+import { Target } from "@romandmitri/ai-patch";
+import { Output, generateText } from "ai";
+import { z } from "zod";
 
-const documentTarget = new Target({
-	content: "# Guide\n\nOld instructions.\n",
-	format: ContentFormat.Markdown,
-});
-const summaryTarget = new Target({
-	content: "# Summary\n\nOld summary.\n",
-	format: ContentFormat.Markdown,
-});
+const document = "# Guide\n\nOld instructions.\n";
+const summary = "# Summary\n\nOld summary.\n";
+const updateInstructions = "Update the guide and keep its summary in sync.";
 
-const {output} = await generateText({
+const documentTarget = Target.fromContent(document);
+const summaryTarget = Target.fromContent(summary);
+
+const { output } = await generateText({
 	model,
-	prompt: "Update the guide and its summary.",
+	instructions: "Return only the patches needed to perform the requested update.",
+	messages: [
+		{ role: "user", content: "The [update_instructions]:\n" + updateInstructions },
+		{ role: "user", content: "The [document]:\n" + document },
+		{ role: "user", content: "The [summary]:\n" + summary },
+	],
 	output: Output.object({
 		schema: z.object({
 			documentOperations: documentTarget.toSchema(),
@@ -65,26 +68,3 @@ const updatedSummary = summaryTarget.apply(output.summaryOperations);
 ```
 
 Each schema describes one immutable target. Operations cannot address another target or change which content snapshot supplies their coordinates.
-
-## Tools
-
-`Target.toVercelTool()` creates a target-bound AI SDK tool. Its strict input is `{ patches: Operation[] }`, and execution returns the updated content string.
-
-```ts
-import {ContentFormat, Target} from "@romandmitri/ai-patch";
-import {generateText, isStepCount} from "ai";
-
-const target = new Target({
-	content: "# Guide\n\nOld instructions.\n",
-	format: ContentFormat.Markdown,
-});
-
-await generateText({
-	model,
-	prompt: "Update the guide with the patch tool.",
-	tools: {
-		patchGuide: target.toVercelTool(),
-	},
-	stopWhen: isStepCount(5),
-});
-```

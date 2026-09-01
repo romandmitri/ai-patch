@@ -7,15 +7,12 @@ import { PatchOperation_InsertAfter_Schema } from "#src/operation/Operation_Inse
 import { PatchOperation_InsertBefore_Schema } from "#src/operation/Operation_InsertBefore.js";
 import { PatchOperation_Replace_Schema } from "#src/operation/Operation_Replace.js";
 import { Patcher_Text } from "#src/patch/Patcher_Text.js";
-import { tool, type Tool } from "ai";
 import { z, type ZodIssue, type ZodType } from "zod";
 
 export interface TargetOptions {
 	readonly content: Content;
 	readonly format: ContentFormat;
 }
-
-export type TargetTool = Tool<{ patches: Operation[] }, Content>;
 
 export class Target {
 	readonly content: Content;
@@ -63,19 +60,6 @@ export class Target {
 			case ContentFormat.Text:
 				return new Patcher_Text(this.content).apply(parsed.data);
 		}
-	}
-
-	toVercelTool(): TargetTool {
-		return tool({
-			description:
-				"Atomically patch this target only. Every patch is validated against this target's original content, and execution returns the updated content string.",
-			inputSchema: z
-				.strictObject({
-					patches: this.toSchema().describe("The complete atomic patch list for this target only."),
-				})
-				.describe("Patch input for this immutable target; patches cannot address any other target."),
-			execute: ({ patches }) => this.apply(patches),
-		});
 	}
 
 	private failValidation(issue: ZodIssue): never {

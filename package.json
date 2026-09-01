@@ -54,7 +54,6 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"ai": "7.0.87",
 		"zod": "4.5.4"
 	},
 	"devDependencies": {
