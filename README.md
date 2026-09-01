@@ -32,9 +32,9 @@ Text is the currently supported content format. JSON coming... if needed.
 object.
 
 ```ts
-import {ContentFormat, Target} from "@romandmitri/ai-patch";
-import {Output, generateText} from "ai";
-import {z} from "zod";
+import { ContentFormat, Target } from "@romandmitri/ai-patch";
+import { Output, generateText } from "ai";
+import { z } from "zod";
 
 const documentTarget = new Target({
 	content: "# Guide\n\nOld instructions.\n",
@@ -45,7 +45,7 @@ const summaryTarget = new Target({
 	format: ContentFormat.Markdown,
 });
 
-const {output} = await generateText({
+const { output } = await generateText({
 	model,
 	prompt: "Update the guide and its summary.",
 	output: Output.object({
@@ -67,8 +67,8 @@ Each schema describes one immutable target. Operations cannot address another ta
 `Target.toVercelTool()` creates a target-bound AI SDK tool. Its strict input is `{ patches: Operation[] }`, and execution returns the updated content string.
 
 ```ts
-import {ContentFormat, Target} from "@romandmitri/ai-patch";
-import {generateText, isStepCount} from "ai";
+import { ContentFormat, Target } from "@romandmitri/ai-patch";
+import { generateText, isStepCount } from "ai";
 
 const target = new Target({
 	content: "# Guide\n\nOld instructions.\n",
