@@ -4,8 +4,11 @@
 	"author": "Roman Eidenzon <romandmitri@gmail.com> (https://www.romandmitri.com)",
 	"description": "Diff-based updates for large LLM-generated text files.",
 	"type": "module",
+	"imports": {
+		"#src/*": "./dist/*"
+	},
 	"engines": {
-		"node": ">=20"
+		"node": ">=22"
 	},
 	"exports": {
 		".": {
@@ -22,15 +25,25 @@
 	"scripts": {
 		"clean": "rimraf dist",
 		"build": "npm run clean && tsc",
-		"typecheck": "tsc --noEmit",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"test": "node --import tsx --test src/target/test/*.test.ts",
+		"typecheck": "tsc --noEmit && tsc --project tsconfig.test.json",
 		"prepublishOnly": "npm run typecheck && npm run build"
 	},
 	"publishConfig": {
 		"access": "public"
 	},
+	"dependencies": {
+		"ai": "7.0.87",
+		"zod": "4.5.4"
+	},
 	"devDependencies": {
+		"@types/json-schema": "7.0.15",
 		"@types/node": "26.4.0",
+		"prettier": "3.9.6",
 		"rimraf": "6.1.3",
+		"tsx": "4.23.13",
 		"typescript": "7.0.2"
 	}
 }
