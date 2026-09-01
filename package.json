@@ -1,6 +1,6 @@
 {
 	"name": "@romandmitri/ai-patch",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"author": "Roman Eidenzon <romandmitri@gmail.com> (https://www.romandmitri.com)",
 	"description": "Validated, atomic text patches for precise AI and LLM edits to large text prompts/documents.",
 	"repository": {
