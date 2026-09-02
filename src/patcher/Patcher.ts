@@ -8,5 +8,5 @@ export abstract class Patcher {
 		this.content = content;
 	}
 
-	abstract apply(operations: readonly Operation[]): Content;
+	abstract patch(operations: readonly Operation[]): Content;
 }

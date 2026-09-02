@@ -10,7 +10,7 @@ export type Operation_InsertAfter = {
 	readonly newText: ContentPartial;
 };
 
-export const PatchOperation_InsertAfter_Schema = z
+export const Operation_InsertAfter_Schema = z
 	.strictObject({
 		operation: z
 			.literal(OperationType.InsertAfter)

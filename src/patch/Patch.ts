@@ -1,12 +1,11 @@
 import type { ContentPartial } from "#src/content/ContentPartial.js";
 import type { ContentPosition } from "#src/content/ContentPosition.js";
-import type { EditIndex } from "#src/patch/EditIndex.js";
+import type { PatchIndex } from "#src/patch/PatchIndex.js";
 
-// TODO: reidenzon - Rename to Patch?!
-export interface Edit {
-	readonly inputIndex: EditIndex;
+export type Patch = {
+	readonly inputIndex: PatchIndex;
 	readonly start: ContentPosition;
 	readonly end: ContentPosition;
 	readonly replacement: ContentPartial;
 	readonly isInsertion: boolean;
-}
+};

@@ -32,9 +32,6 @@ Text is the currently supported content format. JSON coming... if needed.
 
 ## Structured Output
 
-`Target.toSchema()` returns a Zod schema for one operation array. Use it directly for a single target or compose several target schemas into a caller-owned
-object.
-
 ```ts
 import { Target } from "@romandmitri/ai-patch";
 import { Output, generateText } from "ai";
@@ -44,27 +41,25 @@ const document = "# Guide\n\nOld instructions.\n";
 const summary = "# Summary\n\nOld summary.\n";
 const updateInstructions = "Update the guide and keep its summary in sync.";
 
-const documentTarget = Target.fromContent(document);
-const summaryTarget = Target.fromContent(summary);
+const documentPatchlet = Patchlet.from(document);
+const summaryPatchlet = Patchlet.from(summary);
 
 const { output } = await generateText({
 	model,
 	instructions: "Return only the patches needed to perform the requested update.",
 	messages: [
 		{ role: "user", content: "The [update_instructions]:\n" + updateInstructions },
-		{ role: "user", content: "The [document]:\n" + document },
-		{ role: "user", content: "The [summary]:\n" + summary },
+		{ role: "user", content: "The [document]:\n" + documentPatchlet.content },
+		{ role: "user", content: "The [summary]:\n" + summaryPatchlet.content },
 	],
 	output: Output.object({
 		schema: z.object({
-			documentOperations: documentTarget.toSchema(),
-			summaryOperations: summaryTarget.toSchema(),
+			documentPatches: documentPatchlet.toSchema(),
+			summaryPatches: summaryPatchlet.toSchema(),
 		}),
 	}),
 });
 
-const updatedDocument = documentTarget.apply(output.documentOperations);
-const updatedSummary = summaryTarget.apply(output.summaryOperations);
+const updatedDocument = documentPatchlet.patch(output.documentPatches);
+const updatedSummary = summaryPatchlet.patch(output.summaryPatches);
 ```
-
-Each schema describes one immutable target. Operations cannot address another target or change which content snapshot supplies their coordinates.

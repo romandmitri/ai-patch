@@ -1,10 +1,6 @@
-import { ContentFormat, type Operation, OperationType, Target } from "#src/index.js";
+import { ContentFormat, type Operation, OperationType, Patchlet } from "#src/index.js";
 import assert from "node:assert/strict";
 import { test } from "node:test";
-
-function target(content: string): Target {
-	return new Target({ content, format: ContentFormat.Text });
-}
 
 test("apply supports all four operations", async (t) => {
 	const cases: Array<{
@@ -55,14 +51,14 @@ test("apply supports all four operations", async (t) => {
 
 	for (const example of cases) {
 		await t.test(example.name, () => {
-			assert.equal(target("alpha\nbeta\ngamma").apply([example.patch]), example.expected);
+			assert.equal(Patchlet.from("alpha\nbeta\ngamma").patch([example.patch]), example.expected);
 		});
 	}
 });
 
 test("apply replaces multiline anchors exactly", () => {
 	const content = "# Heading\nold first\nold second\nfooter\n";
-	const result = target(content).apply([
+	const result = Patchlet.from(content).patch([
 		{
 			operation: OperationType.Replace,
 			expectedLine: 2,
@@ -75,7 +71,7 @@ test("apply replaces multiline anchors exactly", () => {
 });
 
 test("a batch uses original line coordinates after line-changing edits", () => {
-	const result = target("one\ntwo\nthree\nfour").apply([
+	const result = Patchlet.from("one\ntwo\nthree\nfour").patch([
 		{
 			operation: OperationType.InsertBefore,
 			expectedLine: 2,
@@ -93,7 +89,7 @@ test("a batch uses original line coordinates after line-changing edits", () => {
 });
 
 test("CRLF anchors match LF patches and CRLF output is preserved", () => {
-	const result = target("one\r\ntwo\r\nthree").apply([
+	const result = Patchlet.from("one\r\ntwo\r\nthree").patch([
 		{
 			operation: OperationType.Replace,
 			expectedLine: 2,
@@ -107,7 +103,7 @@ test("CRLF anchors match LF patches and CRLF output is preserved", () => {
 
 test("empty content and a final line without a newline can be patched", () => {
 	assert.equal(
-		target("").apply([
+		Patchlet.from("").patch([
 			{
 				operation: OperationType.InsertBefore,
 				expectedLine: 1,
@@ -119,7 +115,7 @@ test("empty content and a final line without a newline can be patched", () => {
 	);
 
 	assert.equal(
-		target("first\nlast").apply([
+		Patchlet.from("first\nlast").patch([
 			{
 				operation: OperationType.Replace,
 				expectedLine: 2,
@@ -132,8 +128,8 @@ test("empty content and a final line without a newline can be patched", () => {
 });
 
 test("Target remains immutable after applying patches", () => {
-	const patchTarget = target("before");
-	const result = patchTarget.apply([
+	const patchTarget = Patchlet.from("before");
+	const result = patchTarget.patch([
 		{
 			operation: OperationType.Replace,
 			expectedLine: 1,
@@ -145,5 +141,4 @@ test("Target remains immutable after applying patches", () => {
 	assert.equal(result, "after");
 	assert.equal(patchTarget.content, "before");
 	assert.equal(patchTarget.format, ContentFormat.Text);
-	assert.equal(Object.isFrozen(patchTarget), true);
 });

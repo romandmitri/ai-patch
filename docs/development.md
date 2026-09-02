@@ -17,7 +17,7 @@ rebuilds `dist/` whenever a source file changes. Stop the watcher with Ctrl+C.
 
 ## Package Scripts
 
-- `npm test`: runs `src/target/test/*.test.ts` with Node's test runner and `tsx`.
+- `npm test`: runs `../src/patchlet/test/*.test.ts` with Node's test runner and `tsx`.
 - `npm run typecheck`: checks source and test TypeScript configurations without emitting output.
 - `npm run build`: removes `dist/` and compiles JavaScript, declarations, and maps.
 - `npm run dev`: watches source files and rebuilds `dist/` after each change.

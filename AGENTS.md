@@ -6,7 +6,7 @@
   and atomicity semantics, error behavior, AI SDK integration, supported formats, runtime requirements, package metadata, or scripts change.
 - Keep `CONTEXT.md` synchronized whenever source or test topology, module responsibilities, build configuration, validation architecture, supported formats, or
   contributor workflows change.
-- Derive documentation from `src/index.ts`, implementation and schemas under `src/`, tests under `src/target/test/`, TypeScript configuration, and
+- Derive documentation from `src/index.ts`, implementation and schemas under `src/`, tests under `src/patchlet/test/`, TypeScript configuration, and
   `package.json`. Do not treat generated `dist/` output as an authority. Keep `docs/usage.md`, `docs/ai-sdk.md`, `docs/api.md`, and `docs/development.md` focused on
   their named concerns.
 - Use exact exported identifiers and commands that exist in `package.json`; ensure README examples compile against the pinned dependency versions.

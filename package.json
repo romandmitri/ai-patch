@@ -46,7 +46,7 @@
 		"dev": "tsc --watch --preserveWatchOutput",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
-		"test": "node --import tsx --test src/target/test/*.test.ts",
+		"test": "node --import tsx --test src/patchlet/test/*.test.ts",
 		"typecheck": "tsc --noEmit && tsc --project tsconfig.test.json",
 		"prepublishOnly": "npm run typecheck && npm run build"
 	},

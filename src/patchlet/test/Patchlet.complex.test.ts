@@ -1,4 +1,4 @@
-import { ContentFormat, type Operation, OperationType, Target } from "#src/index.js";
+import { type Operation, OperationType, Patchlet } from "#src/index.js";
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
@@ -69,13 +69,6 @@ For each step include the owner, expected signal, and failure action.
 Finish with an explicit GO or NO-GO recommendation.
 `;
 
-function target(): Target {
-	return new Target({
-		content: STARTING_PROMPT,
-		format: ContentFormat.Text,
-	});
-}
-
 test("applies a complex batch in deliberately non-document order", () => {
 	const patches: Operation[] = [
 		{
@@ -111,7 +104,7 @@ test("applies a complex batch in deliberately non-document order", () => {
 		},
 	];
 
-	const result = target().apply(patches);
+	const result = Patchlet.from(STARTING_PROMPT).patch(patches);
 
 	assert.match(result, /Always state assumptions before presenting the deployment plan\./);
 	assert.match(result, /Wait ten minutes before evaluating health signals\./);
@@ -121,7 +114,7 @@ test("applies a complex batch in deliberately non-document order", () => {
 	assert.match(result, /Require sign-off from the regional service owner\./);
 	assert.doesNotMatch(result, /Do not retry the deployment/);
 	assert.match(result, /State the release identifier at the top/);
-	assert.equal(target().content, STARTING_PROMPT);
+	assert.equal(Patchlet.from(STARTING_PROMPT).content, STARTING_PROMPT);
 });
 
 test("produces identical output when independent operations are reversed", () => {
@@ -146,8 +139,8 @@ test("produces identical output when independent operations are reversed", () =>
 	];
 
 	const reversed = [...forward].reverse();
-	const forwardResult = target().apply(forward);
-	const reversedResult = target().apply(reversed);
+	const forwardResult = Patchlet.from(STARTING_PROMPT).patch(forward);
+	const reversedResult = Patchlet.from(STARTING_PROMPT).patch(reversed);
 
 	assert.equal(reversedResult, forwardResult);
 	assert.match(forwardResult, /^# Atlas Deployment Controller/);
@@ -156,7 +149,7 @@ test("produces identical output when independent operations are reversed", () =>
 });
 
 test("combines adjacent boundary insertions with multiline replacement", () => {
-	const result = target().apply([
+	const result = Patchlet.from(STARTING_PROMPT).patch([
 		{
 			operation: OperationType.InsertBefore,
 			expectedLine: 34,
@@ -184,7 +177,7 @@ test("combines adjacent boundary insertions with multiline replacement", () => {
 });
 
 test("deletes an early section while later patches retain original line numbers", () => {
-	const result = target().apply([
+	const result = Patchlet.from(STARTING_PROMPT).patch([
 		{
 			operation: OperationType.Delete,
 			expectedLine: 13,
@@ -213,7 +206,7 @@ test("deletes an early section while later patches retain original line numbers"
 });
 
 test("replaces the complete response contract and edits distant safeguards", () => {
-	const result = target().apply([
+	const result = Patchlet.from(STARTING_PROMPT).patch([
 		{
 			operation: OperationType.Replace,
 			expectedLine: 63,

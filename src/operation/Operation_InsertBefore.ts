@@ -10,7 +10,7 @@ export type Operation_InsertBefore = {
 	readonly newText: ContentPartial;
 };
 
-export const PatchOperation_InsertBefore_Schema = z
+export const Operation_InsertBefore_Schema = z
 	.strictObject({
 		operation: z
 			.literal(OperationType.InsertBefore)

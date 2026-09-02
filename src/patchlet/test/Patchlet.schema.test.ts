@@ -1,14 +1,10 @@
-import { ContentFormat, OperationType, Target } from "#src/index.js";
+import { OperationType, Patchlet } from "#src/index.js";
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { z } from "zod";
 
-function target(content: string): Target {
-	return new Target({ content, format: ContentFormat.Text });
-}
-
 test("toSchema parses every operation variant", () => {
-	const schema = target("content").toSchema();
+	const schema = Patchlet.from("content").toSchema();
 	const patches = [
 		{
 			operation: OperationType.Replace,
@@ -39,7 +35,7 @@ test("toSchema parses every operation variant", () => {
 });
 
 test("toSchema rejects malformed operation-specific fields", () => {
-	const schema = target("content").toSchema();
+	const schema = Patchlet.from("content").toSchema();
 
 	assert.equal(
 		schema.safeParse([
@@ -76,7 +72,7 @@ test("toSchema rejects malformed operation-specific fields", () => {
 });
 
 test("schema descriptions document target scope and exact atomic semantics", () => {
-	const schema = target("content").toSchema();
+	const schema = Patchlet.from("content").toSchema();
 	const jsonSchema = JSON.stringify(z.toJSONSchema(schema));
 
 	assert.match(schema.description ?? "", /Atomically update this target only/);
@@ -88,8 +84,8 @@ test("schema descriptions document target scope and exact atomic semantics", () 
 });
 
 test("two target schemas compose as independent object properties", () => {
-	const documentTarget = target("document");
-	const summaryTarget = target("summary");
+	const documentTarget = Patchlet.from("document");
+	const summaryTarget = Patchlet.from("summary");
 	const schema = z.object({
 		documentPatches: documentTarget.toSchema(),
 		summaryPatches: summaryTarget.toSchema(),
@@ -114,6 +110,6 @@ test("two target schemas compose as independent object properties", () => {
 	};
 
 	assert.deepEqual(schema.parse(value), value);
-	assert.equal(documentTarget.apply(value.documentPatches), "updated document");
-	assert.equal(summaryTarget.apply(value.summaryPatches), "updated summary");
+	assert.equal(documentTarget.patch(value.documentPatches), "updated document");
+	assert.equal(summaryTarget.patch(value.summaryPatches), "updated summary");
 });
