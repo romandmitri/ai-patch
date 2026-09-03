@@ -37,18 +37,13 @@ import { Target } from "@romandmitri/ai-patch";
 import { Output, generateText } from "ai";
 import { z } from "zod";
 
-const document = "# Guide\n\nOld instructions.\n";
-const summary = "# Summary\n\nOld summary.\n";
-const updateInstructions = "Update the guide and keep its summary in sync.";
-
-const documentPatchlet = Patchlet.from(document);
-const summaryPatchlet = Patchlet.from(summary);
+const documentPatchlet = Patchlet.from("# Guide\n\nOld instructions.");
+const summaryPatchlet = Patchlet.from("# Summary\n\nOld summary.\n");
 
 const { output } = await generateText({
 	model,
-	instructions: "Return only the patches needed to perform the requested update.",
+	instructions: "Update the document to something else.",
 	messages: [
-		{ role: "user", content: "The [update_instructions]:\n" + updateInstructions },
 		{ role: "user", content: "The [document]:\n" + documentPatchlet.content },
 		{ role: "user", content: "The [summary]:\n" + summaryPatchlet.content },
 	],
